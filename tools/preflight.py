@@ -102,7 +102,7 @@ def report(root=ROOT,hermes_root=None,pickle_app=None,phase='prerequisites',file
     native=bool(info and info.get('cocoa')=='13.0')
     add('native_dependency','pass' if native else required,'Cocoa 의존성 13.0의 설치 메타데이터 확인.' if native else '검증 기준 Cocoa 의존성이 없거나 다른 버전입니다.','Hermes Python으로 requirements-native.txt를 설치/검토하세요. 이 점검은 패키지를 설치하지 않습니다.' if not native else '')
     if present:
-        expected={'toolsets.py':{'create_custom_toolset','resolve_multiple_toolsets'},'tools/computer_use/tool.py':{'set_approval_callback','_request_approval','_get_backend'},'tools/computer_use/cua_backend.py':{'_action'}}
+        expected={'toolsets.py':{'create_custom_toolset','resolve_multiple_toolsets'},'tools/computer_use/tool.py':{'set_approval_callback','_request_approval','_get_backend'},'tools/computer_use/cua_backend.py':{'_action','_set_active_target','_clear_active_target'},'tools/computer_use/cua_backend_capture.py':{'_gws_args','_fetch_or_refetch'}}
         available=True;snapshot=False
         try:
             for rel,names in expected.items():
@@ -110,9 +110,9 @@ def report(root=ROOT,hermes_root=None,pickle_app=None,phase='prerequisites',file
                 available=available and names<=found
             capture=hermes/'tools/computer_use/cua_backend_capture.py'
             if capture.is_file():
-                tree=ast.parse(capture.read_text());snapshot=any(isinstance(n,ast.Attribute) and n.attr=='_snapshot_id' and isinstance(n.ctx,ast.Store) for n in ast.walk(tree))
+                tree=ast.parse(capture.read_text());found={n.name for n in ast.walk(tree) if isinstance(n,(ast.FunctionDef,ast.AsyncFunctionDef))};snapshot={'_gws_args','_fetch_or_refetch'}<=found
             add('hermes_interfaces','pass' if available else 'block','주요 내부 함수 정의 확인.' if available else '브리지가 사용하는 내부 함수 정의가 빠져 있습니다.','호환 Hermes 버전/어댑터를 검토하세요. 자동 패치하지 않습니다.' if not available else '')
-            add('snapshot_support','pass' if snapshot else 'warn','캡처 snapshot ID 저장 코드 확인.' if snapshot else '캡처 snapshot ID 저장이 정적 검사에서 확인되지 않았습니다.','driver 토큰/캡처 호환성을 가상 UI로 확인하세요. 이 항목만으로 고장을 단정하지 않습니다.' if not snapshot else '')
+            add('snapshot_support','pass' if snapshot else 'warn','브리지 snapshot 어댑터가 사용하는 캡처 함수 정의 확인.' if snapshot else '브리지 snapshot 어댑터에 필요한 캡처 함수가 확인되지 않았습니다.','호환 Hermes 버전을 확인하세요. 원본 소스는 자동 수정하지 않습니다.' if not snapshot else '')
         except (OSError,SyntaxError,UnicodeError):add('hermes_interfaces','manual','Hermes 내부 코드를 정적으로 판독하지 못했습니다.','Hermes Python과 설치 버전을 확인하세요.')
     # Read only private state; never print contents, paths, names or exceptions.
     initialized=state.is_dir();state_safe=False

@@ -178,7 +178,8 @@ def main():
         from .window_recovery import frontmost_pid
         from tools.computer_use.cua_backend import CuaDriverBackend
         from .screen_tools import name
-        backend=CuaDriverBackend(permission_mode='standard')
+        from bridge.backend_compat import adapt_backend
+        backend=adapt_backend(CuaDriverBackend(permission_mode='standard'))
         if not any(name(w.get('app_name')) in {'pickle','피클'} and name(w.get('title')) in {'pickle','피클'}
                    and not w.get('off_screen') for w in backend.list_windows()):
             from .window_recovery import optional_recovery

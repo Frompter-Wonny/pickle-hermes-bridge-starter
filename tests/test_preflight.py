@@ -22,7 +22,7 @@ class PreflightTests(unittest.TestCase):
         self.hermes=self.base/'hermes';self.hermes.mkdir()
         definitions={'cli.py':'','tools/registry.py':'','toolsets.py':'def create_custom_toolset():pass\ndef resolve_multiple_toolsets():pass\n',
           'tools/computer_use/tool.py':'def set_approval_callback():pass\ndef _request_approval():pass\ndef _get_backend():pass\n',
-          'tools/computer_use/cua_backend.py':'def _action():pass\n','tools/computer_use/cua_backend_capture.py':'self._snapshot_id = "fixture"\n'}
+          'tools/computer_use/cua_backend.py':'def _action():pass\ndef _set_active_target():pass\ndef _clear_active_target():pass\n','tools/computer_use/cua_backend_capture.py':'def _gws_args():pass\ndef _fetch_or_refetch():pass\n'}
         for f,text in definitions.items():
             p=self.hermes/f;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text)
         p=self.hermes/'venv/bin/python';p.parent.mkdir(parents=True);p.write_text('fixture, never executed');p.chmod(0o700)
@@ -57,6 +57,10 @@ class PreflightTests(unittest.TestCase):
         (self.hermes/'tools/computer_use/tool.py').write_text('def _get_backend():pass')
         (self.hermes/'tools/computer_use/cua_backend_capture.py').write_text('pass')
         statuses=self.statuses(self.run_report());self.assertEqual(statuses['hermes_interfaces'],'block');self.assertEqual(statuses['snapshot_support'],'warn')
+    def test_original_capture_without_local_snapshot_patch_is_adapter_ready(self):
+        statuses=self.statuses(self.run_report())
+        self.assertEqual(statuses['hermes_interfaces'],'pass')
+        self.assertEqual(statuses['snapshot_support'],'pass')
     def test_missing_native_dependency_blocks_configured_phase(self):
         self.host.cocoa=None
         self.assertEqual(self.statuses(self.run_report())['native_dependency'],'warn')

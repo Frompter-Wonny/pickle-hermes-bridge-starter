@@ -1,16 +1,19 @@
 """Adapt a captured input element to the driver's targeted background insert."""
 from .store import Denied
 import re
+from .backend_compat import remember_snapshot,clear_snapshot
 
 
 def snapshot_token(backend,element):
     tokens=getattr(backend,'_snapshot_tokens',{})
+    indices=getattr(backend,'_bridge_snapshot_indices',None)
+    if indices is not None and element not in indices:raise Denied('element_not_in_bridge_snapshot')
     token=tokens.get(element)
     if token:return token
-    # v0.38 may return only tree_markdown + snapshot_id, with no elements[]
-    # tokens. The driver's documented token format is <snapshot_id>:<row>.
+    # Structured rows may omit per-element tokens. Adapted backends permit
+    # the documented <snapshot_id>:<row> format only for observed indices.
     snapshot=getattr(backend,'_snapshot_id',None)
-    if (not tokens and isinstance(snapshot,str) and re.fullmatch(r's[0-9a-f]{8}',snapshot)
+    if ((not tokens or indices is not None) and isinstance(snapshot,str) and re.fullmatch(r's[0-9a-f]{8}',snapshot)
             and type(element) is int and element>=0):return snapshot+':'+str(element)
     raise Denied('captured_field_token_missing')
 
@@ -148,6 +151,7 @@ def read_composer(backend,target):
     if (current.get('pid'),current.get('window_id'))!=target:raise Denied('captured_target_changed')
     if not backend._session.supports_input_property('get_window_state','tree_format'):
         raise Denied('live_composer_value_not_supported')
+    clear_snapshot(backend)
     raw=backend._session.call_tool('get_window_state',{'pid':target[0],'window_id':target[1],
             'tree_format':'elements','include_screenshot':False,'max_elements':2000,'timeout_ms':5000})
     data=raw.get('structuredContent') or {}
@@ -162,17 +166,9 @@ def read_composer(backend,target):
     value=fields[0].get('value')
     if value is None:value=''
     if not isinstance(value,str):raise Denied('composer_value_not_text')
-    snapshot=data.get('snapshot_id')
-    if not isinstance(snapshot,str) or not re.fullmatch(r's[0-9a-f]{8}',snapshot):
-        raise Denied('composer_snapshot_id_required')
-    backend._snapshot_id=snapshot
-    backend._snapshot_tokens={e['element_index']:e['element_token'] for e in rows
-             if type(e.get('element_index')) is int and isinstance(e.get('element_token'),str)}
+    remember_snapshot(backend,raw,target,allow_truncated=True)
     index=buttons[0].get('element_index') if buttons else None
     if index is not None and (type(index) is not int or index<0):raise Denied('live_send_control_required')
-    # A long, virtualized chat history may be truncated after these controls.
-    # The composer value must still match the entire server-built message;
-    # missing/ambiguous controls or a clipped value never pass the send check.
     return {'text':value,'send_element':index,'source':'live_accessibility_value',
             'unrelated_history_truncated':bool(data.get('truncated') or data.get('elements_complete') is False)}
 

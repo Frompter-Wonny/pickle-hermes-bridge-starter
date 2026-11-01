@@ -42,6 +42,11 @@ if screen_verify:
     from bridge.delivery_tools import action_result
     from screen_tools import Screen,SCHEMA
     from tools.computer_use import tool as computer_tool
+    from bridge.backend_compat import adapt_backend
+    def bridge_backend():return adapt_backend(computer_tool._get_backend())
+    def bridge_call(args,**kwargs):
+        bridge_backend()
+        return computer_tool.handle_computer_use(args,**kwargs)
     def navigate(args):
         # The user authorized inspecting this chat. Only the facade's fixed,
         # bounded scroll operation is approved; never unlock general input.
@@ -51,14 +56,14 @@ if screen_verify:
         try:
             computer_tool.set_approval_callback(approve)
             if computer_tool._request_approval('scroll',args):raise ValueError('Chat scroll was not authorized')
-            result=computer_tool._text_response(targeted_action(computer_tool._get_backend(),'scroll',args['element'],
+            result=computer_tool._text_response(targeted_action(bridge_backend(),'scroll',args['element'],
                       direction=args['direction'],amount=args['amount']))
             action_result(result)
             return result
         finally:computer_tool.set_approval_callback(previous)
-    screen=Screen(computer_tool.handle_computer_use,navigate,
+    screen=Screen(bridge_call,navigate,
                   recover=lambda:optional_recovery(Path(__file__).resolve().parents[1],
-                      lambda pid:initialize_startup_composer(computer_tool._get_backend(),pid)))
+                      lambda pid:initialize_startup_composer(bridge_backend(),pid)))
     registry.register(name='pickle_bridge_verify_screen',toolset='pickle_bridge-screen-readonly',schema=SCHEMA,handler=screen.handle)
     create_custom_toolset('pickle_bridge-screen-readonly','Actual Pickle chat verification; capture only',tools=['pickle_bridge_verify_screen'])
     if set(resolve_multiple_toolsets(['pickle_bridge-screen-readonly']))!={'pickle_bridge_verify_screen'}:

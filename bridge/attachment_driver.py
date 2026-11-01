@@ -10,6 +10,7 @@ from .attachments import normalized
 from .screen_tools import name
 from .store import Denied
 from .delivery_driver import targeted_action
+from .backend_compat import remember_snapshot,clear_snapshot
 
 
 class Uploader:
@@ -24,6 +25,7 @@ class Uploader:
         if self.front_pid()!=self.original_front:
             raise Denied('active_app_changed_during_attachment')
         pid,wid=self.target
+        clear_snapshot(self.backend)
         raw=self.backend._session.call_tool('get_window_state',{
             'pid':pid,'window_id':wid,'tree_format':'elements','include_screenshot':False,
             'max_elements':4000,'timeout_ms':10000})
@@ -36,8 +38,7 @@ class Uploader:
         rows=data.get('elements')
         if not rows or not data.get('snapshot_id'):
             raise Denied('attachment_surface_unresolved')
-        self.backend._snapshot_id=data['snapshot_id']
-        self.backend._snapshot_tokens={e['element_index']:e['element_token'] for e in rows if e.get('element_token')}
+        remember_snapshot(self.backend,raw,self.target)
         return rows
 
     @staticmethod

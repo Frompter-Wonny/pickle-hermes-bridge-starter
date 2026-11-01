@@ -11,6 +11,11 @@ from bridge.delivery_driver import insert,targeted_action,paste_menu,context_men
 from bridge.store import Store
 from bridge.window_recovery import optional_recovery,frontmost_pid
 from tools.computer_use import tool as computer_tool
+from bridge.backend_compat import adapt_backend
+def bridge_backend():return adapt_backend(computer_tool._get_backend())
+def bridge_call(args,**kwargs):
+    bridge_backend()
+    return computer_tool.handle_computer_use(args,**kwargs)
 from tools.registry import registry
 from toolsets import create_custom_toolset,resolve_multiple_toolsets
 
@@ -26,7 +31,7 @@ def act(args):
         computer_tool.set_approval_callback(approve)
         if args['action']=='context_menu':
             if computer_tool._request_approval('click',args):raise ValueError('Background context menu was not authorized')
-            result=computer_tool._text_response(context_menu(computer_tool._get_backend(),args))
+            result=computer_tool._text_response(context_menu(bridge_backend(),args))
         elif args['action'] in {'paste_menu','context_paste'}:
             import json
             consent=json.loads((ROOT/'.runtime/delivery_authorization.json').read_text())
@@ -35,15 +40,15 @@ def act(args):
             from bridge.clipboard_tools import AppKitBoard
             if args['action']=='context_paste':
                 foreground_pid=frontmost_pid
-                native=context_paste(computer_tool._get_backend(),args,AppKitBoard,foreground_pid)
-            else:native=paste_menu(computer_tool._get_backend(),args,AppKitBoard)
+                native=context_paste(bridge_backend(),args,AppKitBoard,foreground_pid)
+            else:native=paste_menu(bridge_backend(),args,AppKitBoard)
             result=computer_tool._text_response(native)
         elif args['action']=='insert':
             if computer_tool._request_approval('type',args):raise ValueError('Background insert was not authorized')
-            result=computer_tool._text_response(insert(computer_tool._get_backend(),args))
+            result=computer_tool._text_response(insert(bridge_backend(),args))
         else:
             if computer_tool._request_approval('click',args):raise ValueError('Background send was not authorized')
-            result=computer_tool._text_response(targeted_action(computer_tool._get_backend(),'click',args['element']))
+            result=computer_tool._text_response(targeted_action(bridge_backend(),'click',args['element']))
         import json,os,time
         data=json.loads(result) if isinstance(result,str) else result
         if isinstance(data,dict):
@@ -63,7 +68,7 @@ def act(args):
 
 
 def diagnose():
-    b=computer_tool._get_backend();s=b._session
+    b=bridge_backend();s=b._session
     result={'snapshot_token_count':len(getattr(b,'_snapshot_tokens',{})),
             'snapshot_id_present':bool(getattr(b,'_snapshot_id',None)),
             'driver_type_properties':sorted(getattr(s,'_tool_schemas',{}).get('type_text',{}).get('properties',{}))}
@@ -86,9 +91,9 @@ def diagnose():
     return result
 
 
-delivery=Delivery(Store(ROOT/'.runtime/bridge.sqlite3'),ROOT/'.runtime',computer_tool.handle_computer_use,act,
-                 diagnose=diagnose,composer=lambda target:read_composer(computer_tool._get_backend(),target),
-                 recover=lambda:optional_recovery(ROOT,lambda pid:initialize_startup_composer(computer_tool._get_backend(),pid)))
+delivery=Delivery(Store(ROOT/'.runtime/bridge.sqlite3'),ROOT/'.runtime',bridge_call,act,
+                 diagnose=diagnose,composer=lambda target:read_composer(bridge_backend(),target),
+                 recover=lambda:optional_recovery(ROOT,lambda pid:initialize_startup_composer(bridge_backend(),pid)))
 registry.register(name='pickle_bridge_pickle_delivery',toolset='pickle_bridge-pickle-delivery',schema=SCHEMA,handler=delivery.handle)
 create_custom_toolset('pickle_bridge-pickle-delivery','Explicit task-scope Pickle delivery only',tools=['pickle_bridge_pickle_delivery'])
 if set(resolve_multiple_toolsets(['pickle_bridge-pickle-delivery']))!={'pickle_bridge_pickle_delivery'}:

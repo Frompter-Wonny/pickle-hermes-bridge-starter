@@ -42,7 +42,7 @@ Pickle 설치본이 여러 개이거나 기본 Applications 폴더 밖에 있다
 ## 확인하는 항목과 한계
 
 - macOS·Apple Silicon(Rosetta에서도 하드웨어 확인)·macOS 14 이상.
-- Hermes 소스 구조·Python 3.11 이상·Cocoa 13.0 설치 메타데이터·주요 내부 함수 정의·snapshot ID 저장 코드. 정적 함수 존재만으로 모든 Hermes/driver 버전 호환성을 보장하지 않는다.
+- Hermes 소스 구조·Python 3.11 이상·Cocoa 13.0 설치 메타데이터·주요 내부 함수 정의·브리지 snapshot 어댑터가 요구하는 캡처 함수. Hermes 원본에 별도의 snapshot ID 저장 패치가 있는지는 필수 조건이 아니다. 정적 함수 존재만으로 모든 Hermes/driver 버전 호환성을 보장하지 않는다.
 - Pickle bundle ID 및 설치본 선택. App Store 지역/계정 배포·다운로드·로그인은 실제 화면에서 확인한다.
 - 상태 폴더·설정 파일의 소유자/비공개 권한, 자료 source 폴더의 존재. 노트 본문을 열거나 전체 폴더를 재귀 검색하지 않는다.
 - ngrok 실행 파일·터널 설정 형식·인증 파일의 존재/권한. 토큰 자체를 읽거나 출력하지 않고 실제 인증 성공도 판정하지 않는다.
@@ -53,3 +53,5 @@ Pickle 설치본이 여러 개이거나 기본 Applications 폴더 밖에 있다
 화면 기록·접근성 권한은 실제 computer-use 드라이버 프로세스에 적용되므로 이 Python 프로세스의 권한을 조회해 대신 정상이라고 말하지 않는다. 에이전트는 `manual` 항목을 숨기지 말고 doctor·가상 UI 캡처·질문 허락/거절·파일 수신·원하는 자동 시작을 실제 설치에서 확인해야 한다.
 
 표준 출력에는 실제 계정·폴더명·파일 목록·연결 주소·토큰·설정 원문·예외 본문을 넣지 않는다. 그래도 `pass`가 보안 보증이나 OS 샌드박스는 아니다. 원래 설정과 보안 경계는 [SECURITY](../SECURITY.md)를 따른다.
+
+화면 응답 보완의 범위와 실제 검증 한계는 [Hermes 호환성](HERMES_COMPATIBILITY.md)을 참고한다.

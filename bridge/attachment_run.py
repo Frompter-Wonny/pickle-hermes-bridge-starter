@@ -34,7 +34,8 @@ def main():
     if (actual.st_dev,actual.st_ino)!=(received.st_dev,received.st_ino):raise Denied('delivery_lock_identity_mismatch')
     try:
         fcntl.flock(fd,fcntl.LOCK_EX|fcntl.LOCK_NB)
-        backend=CuaDriverBackend(permission_mode='standard')
+        from bridge.backend_compat import adapt_backend
+        backend=adapt_backend(CuaDriverBackend(permission_mode='standard'))
         Uploader(backend,approve_action,frontmost_pid,requests,qid).run()
     finally:os.close(fd)
 
