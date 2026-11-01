@@ -14,6 +14,7 @@ PATTERNS=[re.compile(r'\b\d{8,12}:[A-Za-z0-9_-]{30,}\b'),
 # Exact flattened, visually reviewed excerpts only. A changed or new capture
 # requires another privacy review; other binary files remain rejected.
 REVIEWED_IMAGES = {
+    'docs/images/phone-delegation-redacted.png': 'ef5f5b8bae20744cd9aaf2b53d8b7304d5fade2a7b6daaccc3708f6228fcc2bc',
     'docs/images/attachment-menu-redacted.png': '497012ff07c651c9c574de78e69faff2903fe2e1922ddf14653d10af3062b30f',
     'docs/images/file-receipt-redacted.png': '730be1476a667c18c5a98159fc74931b0927930f3c1338aa3441fdbfec678e50',
     'docs/images/photo-transfer-redacted.png': 'c28a0217e7e78c8c2466ceb8a7b4f5f6124d440f53945d9c9b2729e31005f810',
