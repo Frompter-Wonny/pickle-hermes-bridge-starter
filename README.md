@@ -38,7 +38,7 @@ Telegram 봇끼리 대화하는 방식이 아닙니다. Telegram은 기존 Herme
 
 ## 사용법
 
-설치를 마친 뒤 Telegram의 **기존 Hermes 비서**에게 요청합니다. 사용법은 가상 문서 시연과 사진 전달 캡처의 필요한 부분으로 설명합니다. 개인 비서 이름·프로필·다른 대화·메타데이터는 잘라내거나 불투명하게 가렸으며 원본 캡처는 포함하지 않습니다.
+설치를 마친 뒤 Telegram의 **기존 Hermes 비서**에게 요청합니다. 사용법은 가상 문서 시연과 사진 전달 캡처의 필요한 부분으로 설명합니다. 창 전체가 보이도록 유지하고 개인 비서 이름·다른 대화·가족 관련 문구는 불투명 박스로 가렸습니다. 가리지 않은 원본과 개인 메타데이터는 포함하지 않습니다.
 
 1. **업무를 맡깁니다.** Hermes 비서에게 “이 일은 Pickle 비서에게 맡기고 결과를 알려줘”라고 요청합니다.
 2. **파일이 필요하면 함께 보냅니다.** Telegram에서 파일을 첨부하고 “이 파일 Pickle 비서에게 보내줘”라고 하거나, 허락한 로컬 파일을 지정합니다. 단순히 파일을 받았다는 이유만으로 자동 전달하지는 않습니다.
@@ -46,19 +46,19 @@ Telegram 봇끼리 대화하는 방식이 아닙니다. Telegram은 기존 Herme
 
 ### 사진 전달 화면
 
-<img src="docs/images/photo-transfer-redacted.png" width="624" alt="Telegram 사진 요청과 Pickle 사진 수신 부분을 나란히 배치한 가림 처리 캡처">
+<img src="docs/images/photo-transfer-redacted.png" width="1000" alt="왼쪽 Pickle 앱과 오른쪽 Telegram 창 전체를 유지하고 개인정보만 가린 사진 전달 화면">
 
-*왼쪽은 Telegram에서 보낸 사진, 오른쪽은 Pickle에 도착한 사진입니다. 사용자 제공 화면에서 필요한 부분만 잘라 나란히 배치했으며, 요청문에 포함된 개인 이름은 검은색으로 가렸습니다. 이 장면은 사진 전달 예시이며 모든 작업의 자동 완료를 보장하는 증거는 아닙니다.*
+*왼쪽은 Pickle의 사진 수신 화면, 오른쪽은 Telegram의 전송 요청 화면입니다. 원본 창 배치를 유지하고 비서 이름·다른 토픽·이전 대화·가족 관련 문구만 불투명하게 가렸습니다. 위쪽의 앱 이름 표시는 설명용으로 추가했습니다. 이 장면은 사진 전달 예시이며 모든 작업의 자동 완료를 보장하는 증거는 아닙니다.*
 
 ### 문서 수신 화면
 
-<img src="docs/images/file-receipt-redacted.png" width="420" alt="가상 Markdown 자료를 받은 실제 응답에서 개인 이름이 포함된 줄을 가린 화면">
+<img src="docs/images/file-receipt-redacted.png" width="420" alt="Pickle 창 전체를 유지하고 개인 이름이 포함된 줄을 가린 가상 Markdown 수신 응답">
 
 *공개 설명용 가상 Markdown을 받은 실제 응답입니다. 개인 이름이 포함된 줄은 전체를 불투명하게 가렸습니다.*
 
 파일 첨부는 Pickle 입력란 왼쪽의 **`+ → 파일`** 경로를 사용합니다. 운영 비서가 즐겨찾기를 통해 허락된 폴더의 정확한 파일을 선택하며, 사용자가 매번 직접 누를 필요는 없습니다.
 
-<img src="docs/images/attachment-menu-redacted.png" width="300" alt="개인 대화와 프로필을 제외하고 잘라낸 Pickle 파일 첨부 메뉴">
+<img src="docs/images/attachment-menu-redacted.png" width="360" alt="Pickle 앱 창을 유지하고 개인정보를 가린 파일 첨부 메뉴">
 
 *입력란의 `+`를 누르면 표시되는 첨부 메뉴 부분입니다.*
 
