@@ -1,7 +1,9 @@
 import tempfile
+import hashlib
+from unittest.mock import patch
 import unittest
 from pathlib import Path
-from tools.check_public import check
+from tools.check_public import check, REVIEWED_IMAGES
 
 class PublicationPrivacyTests(unittest.TestCase):
     def test_personal_name_in_text_or_path_is_rejected(self):
@@ -21,5 +23,17 @@ class PublicationPrivacyTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);(root/'demo.jpg').write_bytes(b'not reviewed')
             self.assertTrue(check(root))
+
+    def test_only_reviewed_exact_bytes_are_exempt(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);p=root/'demo.png';p.write_bytes(b'reviewed')
+            with patch.dict(REVIEWED_IMAGES,{'demo.png':hashlib.sha256(p.read_bytes()).hexdigest()},clear=True):
+                self.assertEqual(check(root),[])
+                p.write_bytes(b'changed capture');self.assertTrue(check(root))
+
+    def test_shipped_images_match_reviewed_hashes(self):
+        root=Path(__file__).resolve().parents[1]
+        for rel,digest in REVIEWED_IMAGES.items():
+            self.assertEqual(hashlib.sha256((root/rel).read_bytes()).hexdigest(),digest)
 
 if __name__=='__main__':unittest.main()

@@ -12,6 +12,8 @@ Codex·Claude Code에게 맡긴다면 [에이전트 설치 지침](AGENT_INSTALL
 
 2026-11-01 확인한 [Pickle App Store 호환성](https://apps.apple.com/us/app/pickle-your-personal-ai-agent/id6795790129)은 Apple M1 이상·macOS 14.0 이상입니다. **Intel Mac은 제외**됩니다. iPhone용 앱의 Mac 실행이며 macOS 검증 미완료 표기가 있으므로, 지원 조건만으로 설치·GUI 조작 성공을 보장하지 않습니다. 실제 Mac App Store에서 설치 버튼과 실행 가능 여부를 확인한 다음 브리지를 준비하세요. 앱의 배포 조건이 바뀌면 최신 표기를 우선합니다.
 
+Pickle이 아직 없다면 설치 에이전트가 공식 App Store 페이지부터 안내합니다. Apple 인증·설치 승인·피클 로그인은 직접 완료한 뒤 같은 작업을 이어갑니다. [미설치 시 절차](AGENT_INSTALL.md#1-1-pickle이-설치되지-않은-경우)를 따르며 비공식 설치로 우회하지 않습니다.
+
 | 준비물 | 먼저 확인할 것 |
 |---|---|
 | macOS·Pickle | Apple Silicon(M1 이상), macOS 14.0 이상. Mac App Store에서 Pickle 설치·실행 및 로그인 후 본인 채팅과 빈 입력란이 보임 |
