@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-31",
+  "user_confirmed_app_fully_quit": true,
+  "closed_app_state_verified": true,
+  "background_launch_verified": true,
+  "login_and_existing_chat_preserved": true,
+  "frontmost_unchanged_during_launch": true,
+  "initial_delivery_attempts_stopped_before_send": 2,
+  "subsequent_delivery_on_relaunched_chat_status": "completed",
+  "actual_reply_confirmed": true,
+  "final_fixed_version_closed_to_reply_single_run": "completed_with_opt_in_startup_warmup",
+  "source_tests_passed": 116,
+  "public_tests_passed": 125,
+  "failed_test_task_revoked": true,
+  "startup_activation_separately_authorized": true,
+  "original_front_app_restored": true,
+  "final_task_status": "completed",
+  "final_delivery_status": "confirmed",
+  "startup_concurrent_typing_feedback_collected": false,
+  "cold_start_delivery_verified_once_with_startup_warmup": true,
+  "repeated_cold_start_reliability_tested": false
+}

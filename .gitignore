@@ -1,0 +1,13 @@
+.runtime*
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+.env*
+*.sqlite*
+*.db
+*.log
+*.pem
+*.key
+ngrok.yml
+credentials*.json

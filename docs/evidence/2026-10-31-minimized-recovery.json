@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-31",
+  "initial_minimized_state_confirmed": true,
+  "native_restore_readback_confirmed": true,
+  "frontmost_app_unchanged_during_restore": true,
+  "task_status": "completed",
+  "delivery_status": "confirmed",
+  "actual_pickle_reply_confirmed": true,
+  "source_tests_passed": 99,
+  "public_tests_passed": 105,
+  "restore_test_concurrent_typing_feedback_collected": false,
+  "restore_is_explicit_opt_in": true,
+  "closed_app_or_locked_mac_recovery_verified": false
+}

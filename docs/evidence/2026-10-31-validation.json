@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-31",
+  "synthetic_data_only": true,
+  "source_tests_passed": 90,
+  "public_tests_passed": 94,
+  "question_outcomes": [
+    {
+      "status": "denied",
+      "mode": null
+    },
+    {
+      "status": "approved",
+      "mode": "following"
+    },
+    {
+      "status": "approved",
+      "mode": "following"
+    }
+  ],
+  "note_source_audits": {
+    "fixture-source-audit.json": {
+      "note_tool_calls": 2,
+      "sources": [
+        "fixture"
+      ]
+    },
+    "following-fixture-source-audit.json": {
+      "note_tool_calls": 2,
+      "sources": [
+        "fixture"
+      ]
+    },
+    "work-resume-source-audit.json": {
+      "sessions": 1,
+      "note_tool_calls": 2,
+      "sources": [
+        "fixture"
+      ],
+      "fixture_only": true
+    }
+  },
+  "same_original_work_resumed_and_completed": true,
+  "native_clipboard_restore_verified": true,
+  "physical_keyboard_or_foreground_used_by_new_delivery": false,
+  "human_concurrent_typing_tested": true,
+  "temporary_test_authorization_expired": true,
+  "temporary_test_grants_revoked": 3,
+  "synthetic_carrier_tasks_revoked": 3,
+  "fixture_question_outcomes": [
+    {
+      "case": "fixture.json",
+      "status": "approved",
+      "mode": "direct"
+    },
+    {
+      "case": "following-fixture.json",
+      "status": "approved",
+      "mode": "following"
+    },
+    {
+      "case": "work-resume-fixture.json",
+      "status": "approved",
+      "mode": "following"
+    }
+  ],
+  "human_concurrent_typing_result": "normal_input_reported_by_operator",
+  "concurrent_typing_task_status": "completed",
+  "concurrent_typing_scope": "one_actual_delivery_on_existing_Mac"
+}
