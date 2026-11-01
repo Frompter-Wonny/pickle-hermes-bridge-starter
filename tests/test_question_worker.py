@@ -4,6 +4,7 @@ from pathlib import Path
 from bridge.inbox import Inbox
 from bridge.question_worker import Worker, Hermes, response_json
 from bridge.store import Store
+from bridge.permission_phrases import save as save_permission_rules
 
 
 class FakeHermes:
@@ -15,6 +16,7 @@ class FakeHermes:
 class WorkerTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.s=Store(Path(self.tmp.name)/'db')
+        save_permission_rules(self.tmp.name,{'version':1,'following_phrases':['그건 Hermes 비서한테 물어봐'],'direct_templates':['Hermes 비서한테 {question} 물어봐줘']})
         self.i=Inbox(self.s);self.cap=self.i.create_channel()
         self.id=self.i.submit(self.cap,'one','fictional preference?');self.q=self.i.pending()[0]
     def tearDown(self):self.tmp.cleanup()
@@ -41,7 +43,7 @@ class WorkerTests(unittest.TestCase):
             with self.assertRaises(ValueError):response_json(text)
 
     def test_visual_proof_requires_exact_question_marker_nonce_and_permission(self):
-        good={'approved':True,'observed_question':'fixture?','observed_marker':'BRIDGE-Q:nonce',
+        good={'approved':True,'scope_matches_question':True,'observed_question':'fixture?','observed_marker':'BRIDGE-Q:nonce',
               'observed_permission':'그건 Hermes 비서한테 물어봐','nonce':'nonce'}
         r=Hermes(self.tmp.name)
         r.run=lambda *a,**kw:good.copy()

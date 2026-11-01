@@ -9,6 +9,7 @@ from .session import live,ROOT,STATE
 from .store import Store,Denied
 from .inbox import Inbox
 from .handoff import Handoffs
+from .permission_phrases import load as permission_rules
 
 
 def private_json(path,value):
@@ -22,6 +23,7 @@ def main():
     p.add_argument('--force',action='store_true',help='Prepare another setup instruction even if one is already applied.')
     args=p.parse_args();session=live()
     if not session or not session['handoffs_enabled']:raise SystemExit('Start the task session first: python3 -m bridge.session start')
+    rules=permission_rules(STATE)
     store=Store(STATE/'bridge.sqlite3');inbox=Inbox(store);handoffs=Handoffs(store)
     channel_file=STATE/'question_channel.txt';cap=None
     if channel_file.exists():
@@ -33,15 +35,15 @@ def main():
     if cap is None:cap=inbox.create_channel(ttl=None if session['expires'] is None else 86400)
     channel=session['origin']+'/inbox/'+cap
     channel_file.write_text(channel);channel_file.chmod(0o600)
+    instruction=(ROOT/'bridge/pickle_protocol.txt').read_text().replace('{{INBOX_URL}}',channel).replace('{{QUESTION_PERMISSION_RULES}}',json.dumps(rules,ensure_ascii=False))
     previous_file=STATE/'onboarding.json'
     if previous_file.exists() and not args.force:
         previous=json.loads(previous_file.read_text())
         try:
             task=handoffs.get(previous['capability'])
-            if previous['url'].startswith(session['origin']+'/work/') and task['status']=='completed' and channel in task['instruction']:
+            if previous['url'].startswith(session['origin']+'/work/') and task['status']=='completed' and task['instruction']==instruction:
                 print(json.dumps({'already_applied':True,'setup_url':previous['url']}));return
         except (Denied,KeyError):pass
-    instruction=(ROOT/'bridge/pickle_protocol.txt').read_text().replace('{{INBOX_URL}}',channel)
     work=handoffs.create(instruction,'Operator-configured Pickle question-permission connection',
                          'configure:'+str(time.time_ns()))
     url=session['origin']+'/work/'+work
