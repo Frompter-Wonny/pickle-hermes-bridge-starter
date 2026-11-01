@@ -6,7 +6,7 @@
 https://github.com/Frompter-Wonny/pickle-hermes-bridge-starter
 
 이 저장소를 내 Mac에 설치해서 내 Hermes 비서와 Pickle 비서를 연결해 줘.
-AGENTS.md, docs/AGENT_INSTALL.md, docs/SETUP.md, SECURITY.md를 먼저 읽고, 지원 환경과 기존 설치를 확인한 뒤 실제 설치부터 가상 메시지 왕복 확인까지 진행해 줘.
+AGENTS.md, docs/AGENT_INSTALL.md, docs/SETUP.md, SECURITY.md를 먼저 읽고, tools/preflight.py로 지원 환경과 기존 설치를 점검한 뒤 실제 설치부터 가상 메시지 왕복 확인까지 진행해 줘.
 기존 설정·모델·메모리·개인 자료를 보존하고, 이미 설치돼 있으면 초기화 대신 업데이트 경로를 따라 줘.
 피클이 없으면 공식 Mac App Store에서 설치를 진행하고, 내가 직접 해야 하는 Apple 인증·설치 승인·약관 수락·피클 로그인만 넘겨줘. 완료되면 같은 작업을 이어가.
 필요한 인증·OS 권한·선택 기능 동의는 필요한 시점에 묶어서 물어보고, 비밀번호·토큰은 채팅이나 Git에 남기지 마.
@@ -97,6 +97,8 @@ Hermes 비서에게 **“Pickle 비서에게 전화 문의를 맡겨줘”**라�
 
 ## 처음 설치한다면
 
+[설치 전 자동 점검](docs/PREFLIGHT.md)으로 Python·Hermes·Pickle·설정·포트·선택한 파일 전달 준비를 확인할 수 있습니다. 설정이나 권한은 바꾸지 않으며 실제 UI·로그인·왕복 검증은 별도로 남겨둡니다.
+
 **[설치 안내를 1번부터 따라가세요 →](docs/SETUP.md)**
 
 설치 에이전트에게 맡기려면 맨 위의 원샷 프롬프트를 사용하세요. 직접 진행할 때는 아래 준비물과 설치 안내를 따릅니다.
@@ -127,7 +129,7 @@ Mac이 켜져 있고 사용자 로그인·잠금 해제 상태여야 합니다. 
 
 ## 검증·문서
 
-서버 코어는 Python 표준 라이브러리, 실제 GUI 전달은 macOS·Hermes computer_use·PyObjC에 의존합니다. 소스 169개·설치 및 동의 도우미 9개·공개 개인정보 검사 5개를 합친 테스트 183개가 통과했습니다. Linux CI 통과가 Mac GUI 설치 검증을 뜻하지는 않습니다.
+서버 코어는 Python 표준 라이브러리, 실제 GUI 전달은 macOS·Hermes computer_use·PyObjC에 의존합니다. 소스 169개·설치 및 동의 도우미 9개·공개 개인정보 검사 5개·설치 전 점검 17개를 합친 테스트 200개가 통과했습니다. Linux CI 통과가 Mac GUI 설치 검증을 뜻하지는 않습니다.
 
 - [설치·첫 시험·업데이트·문제 해결](docs/SETUP.md)
 - [권한과 데이터 처리](SECURITY.md)

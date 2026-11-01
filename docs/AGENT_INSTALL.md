@@ -14,6 +14,8 @@
 
 [README](../README.md), [SECURITY](../SECURITY.md), [SETUP](SETUP.md)를 읽는다. 필요한 상세만 [실제 시험](TEST-RESULTS.ko.md)에서 추가 확인한다.
 
+먼저 `tools/preflight.py --json`으로 [설치 전 자동 점검](PREFLIGHT.md)을 실행한다. 실제 Hermes 경로를 찾으면 `--hermes-root`로 지정한다. `block`은 해결 전 진행하지 않고, `manual`은 실제 화면 검증 대상으로 남긴다. 종료 코드 0을 설치 완료라고 해석하지 않는다. 설정을 마친 뒤 `--phase configured`와 사용자가 선택한 기능 플래그로 재점검한다. 점검을 통과시키려고 기존 서비스 종료·설정 변경·권한 우회를 자동 수행하지 않는다.
+
 먼저 다음을 읽기 전용으로 확인한다. 연결된 자료에서 이미 찾을 수 있는 경로를 사용자에게 다시 묻지 않는다.
 
 - 실행 호스트가 사용자의 **로컬 Mac**이며 Apple Silicon(M1 이상)·macOS 14.0 이상인가. Intel Mac·구버전 macOS는 현재 Pickle App Store 요구사항을 충족하지 않으므로 설치를 중단하고 이유를 안내한다. App Store 최신 호환성 표기와 실제 설치·실행·로그인도 확인한다. 지역/계정 또는 앱 배포 제한으로 설치할 수 없으면 호환된다고 가정하거나 비공식 앱·우회 설치를 시도하지 않는다.

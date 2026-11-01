@@ -43,6 +43,12 @@ PICKLE_BRIDGE_PYTHON="$PICKLE_BRIDGE_HERMES_ROOT/venv/bin/python"
 
 위 Hermes 경로가 자신의 설치와 다르면 **실제 소스 루트로 수정**합니다. `No such file`이면 이후 명령을 실행하지 않습니다. Mac 기본 `python3`가 구버전일 수 있으므로 아래에서는 확인한 Hermes 환경의 Python을 사용합니다. 새 터미널에서는 변수를 다시 설정하세요.
 
+먼저 [설치 전 자동 점검](PREFLIGHT.md)을 실행합니다. 차단 항목은 해결하고, manual 항목은 실제 설치에서 확인하세요. 코드 0도 설치 완료를 뜻하지 않습니다.
+
+```sh
+"$PICKLE_BRIDGE_PYTHON" tools/preflight.py --hermes-root "$PICKLE_BRIDGE_HERMES_ROOT"
+```
+
 먼저 로컬 코드 검사를 실행합니다. 이 단계는 서버·ngrok·피클을 시작하지 않습니다.
 
 ```sh
@@ -133,6 +139,8 @@ PICKLE_BRIDGE_PICKLE_APP="/Applications/피클.app"
 ```
 
 로그인·업데이트·약관 화면은 넘기지 않고 멈춥니다. OS 잠금·절전도 해제하지 않습니다. 포괄적인 컴퓨터 조작 권한이나 전체 노트 접근 허락은 아닙니다.
+
+선택 기능·허락 문구·즐겨찾기 설정이 끝나면 [configured 점검](PREFLIGHT.md)을 다시 실행합니다. 파일/자동 입력 플래그는 실제 선택한 기능에만 사용하고, 정적 점검 통과 뒤에도 아래 실제 왕복 시험이 필요합니다.
 
 ## 5. 수동 세션에서 첫 연결
 
