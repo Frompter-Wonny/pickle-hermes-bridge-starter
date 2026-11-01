@@ -10,7 +10,7 @@ https://github.com/Frompter-Wonny/pickle-hermes-bridge-starter
 이 저장소를 내 Mac에 설치해서 내 Hermes 비서와 Pickle 비서를 연결해 줘.
 AGENTS.md, docs/AGENT_INSTALL.md, docs/SETUP.md, SECURITY.md를 먼저 읽고 설명만 하지 말고 실제 설치와 가상 메시지 왕복 확인까지 진행해 줘.
 
-먼저 macOS와 기존 설치·Hermes·Pickle 상태를 확인해. 기존 설정·모델·메모리·개인 자료를 보존하고, 이미 설치돼 있으면 초기화 대신 업데이트 경로를 따라 줘. Windows·Linux·WSL에서는 설치하지 마.
+먼저 Apple Silicon(M1 이상)·macOS 14 이상인지 확인하고, Mac App Store에서 Pickle을 실제로 설치·실행할 수 있는지 확인해. Intel Mac이나 요구 버전 미달이면 브리지 설치를 멈추고 이유를 알려줘. 이어서 기존 설치·Hermes·Pickle 상태를 확인해. 기존 설정·모델·메모리·개인 자료를 보존하고, 이미 설치돼 있으면 초기화 대신 업데이트 경로를 따라 줘. Windows·Linux·WSL에서는 설치하지 마.
 내가 직접 해야 하는 로그인·인증·OS 권한과 선택 기능의 동의만 필요한 시점에 묶어서 물어봐. 비밀번호·토큰은 채팅이나 Git에 남기지 마.
 파일 전달도 쓸지 물어보고, 쓴다면 수신 대상·허락할 폴더·파일 종류·하위 폴더 포함 여부·일회성/상시 범위를 확인해. 해당 폴더와 임시 전송 폴더가 Pickle 파일 선택창 즐겨찾기에 있는지 실제로 확인하고, 없으면 추가 방법을 안내한 뒤 전체 경로를 검증해 줘. 즐겨찾기를 접근 허락으로 취급하지 마.
 질문 답변의 읽기 전용 제한과 질문별 허락 검증을 유지하고, 확인되지 않은 권한을 임의로 확대하지 마.
@@ -18,6 +18,8 @@ AGENTS.md, docs/AGENT_INSTALL.md, docs/SETUP.md, SECURITY.md를 먼저 읽고 �
 ```
 
 **지원 환경: macOS 전용입니다. Windows·Linux에서는 이 브리지의 설치·실행을 지원하지 않습니다.** 피클 Mac 앱과 macOS 접근성 API·AppKit·launchd에 의존합니다. CI에서 서버 코어 테스트가 통과해도 해당 OS의 GUI 연동을 지원한다는 뜻은 아닙니다.
+
+**Mac도 조건이 있습니다.** Pickle의 [App Store 호환성](https://apps.apple.com/us/app/pickle-your-personal-ai-agent/id6795790129) 기준으로 **Apple Silicon(M1 이상) + macOS 14.0 이상**이 필요하므로 Intel Mac에서는 사용할 수 없습니다. iPhone용 앱을 Mac에서 실행하는 형태이며, App Store에는 macOS 검증 미완료로 표시됩니다. 조건을 충족해도 자신의 Mac App Store에서 설치 가능 여부와 실제 실행·로그인까지 먼저 확인하세요. (2026-11-01 확인)
 
 **내 정보를 아는 Hermes 비서와 일을 실행하는 Pickle 비서를 연결하는 Mac용 실험 프로젝트입니다.** 비서의 개인 이름을 기본값으로 지정하지 않으며, 문서에서는 Hermes 비서·Pickle 비서로 구분합니다.
 

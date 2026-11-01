@@ -10,9 +10,11 @@ Codex·Claude Code에게 맡긴다면 [에이전트 설치 지침](AGENT_INSTALL
 
 **macOS 전용입니다. Windows·Linux에서는 설치·실행할 수 없습니다.** WSL이나 원격 Linux 환경도 피클 Mac 앱을 조작하는 이 브리지의 실행 환경으로 지원하지 않습니다. macOS 접근성 API·AppKit·launchd를 사용하므로 Windows용 명령으로 치환해서 설치하지 마세요.
 
+2026-11-01 확인한 [Pickle App Store 호환성](https://apps.apple.com/us/app/pickle-your-personal-ai-agent/id6795790129)은 Apple M1 이상·macOS 14.0 이상입니다. **Intel Mac은 제외**됩니다. iPhone용 앱의 Mac 실행이며 macOS 검증 미완료 표기가 있으므로, 지원 조건만으로 설치·GUI 조작 성공을 보장하지 않습니다. 실제 Mac App Store에서 설치 버튼과 실행 가능 여부를 확인한 다음 브리지를 준비하세요. 앱의 배포 조건이 바뀌면 최신 표기를 우선합니다.
+
 | 준비물 | 먼저 확인할 것 |
 |---|---|
-| macOS·Pickle | 앱에 로그인해 본인 비서의 채팅과 빈 입력란이 보임 |
+| macOS·Pickle | Apple Silicon(M1 이상), macOS 14.0 이상. Mac App Store에서 Pickle 설치·실행 및 로그인 후 본인 채팅과 빈 입력란이 보임 |
 | Hermes 소스 설치 | 모델 인증과 일반 대화가 됨. `venv/bin/python`, `venv/bin/hermes`가 존재 |
 | Hermes computer_use | 드라이버 설치, 화면 기록·접근성 권한과 실제 피클 캡처가 동작 |
 | ngrok | 공식 실행 파일, 계정의 할당된 HTTPS 도메인, authtoken 준비 |
